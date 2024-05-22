@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import woodiny.socialserver.dto.UserRegisterRequest;
 import woodiny.socialserver.model.User;
 
 import java.sql.ResultSet;
@@ -34,6 +35,15 @@ public class UserRepository {
                 "select * from users where seq = ?",
                 new UserRowMapper(),
                 seq
+        );
+    }
+
+    public int save(UserRegisterRequest request) {
+        return jdbcTemplate.update(
+                "insert into users (email, passwd)" +
+                        " values (?, ?)",
+                request.getPrincipal(),
+                request.getCredentials()
         );
     }
 

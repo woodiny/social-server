@@ -1,10 +1,9 @@
 package woodiny.socialserver.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import woodiny.socialserver.dto.UserRegisterRequest;
+import woodiny.socialserver.dto.UserRegisterResponse;
 import woodiny.socialserver.model.User;
 import woodiny.socialserver.service.UserService;
 
@@ -27,5 +26,11 @@ public class UserController {
     @GetMapping("/api/users/{userId}")
     public User getUser(@PathVariable("userId") Long userId) {
         return userService.getUser(userId);
+    }
+
+    @PostMapping("/api/users/join")
+    public UserRegisterResponse register(@RequestBody UserRegisterRequest request) {
+        userService.register(request);
+        return new UserRegisterResponse(true, "가입완료");
     }
 }
