@@ -1,6 +1,4 @@
-package woodiny.socialserver.model;
-
-import lombok.Getter;
+package woodiny.socialserver.model.user;
 
 public class Role {
     private final String value;

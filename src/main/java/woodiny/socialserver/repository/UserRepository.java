@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import woodiny.socialserver.dto.UserRegisterRequest;
-import woodiny.socialserver.model.User;
+import woodiny.socialserver.model.user.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

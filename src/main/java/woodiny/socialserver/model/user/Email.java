@@ -1,4 +1,4 @@
-package woodiny.socialserver.model;
+package woodiny.socialserver.model.user;
 
 import lombok.Getter;
 
