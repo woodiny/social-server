@@ -9,7 +9,7 @@ public class User {
     private final Long seq;
     private final String email;
     private String passwd;
-    private final int loginCount;
+    private int loginCount;
     private LocalDateTime lastLoginAt;
     private final LocalDateTime createAt;
 
