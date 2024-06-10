@@ -6,12 +6,12 @@ import java.time.LocalDateTime;
 
 @Getter
 public class User {
-    private Long seq;
-    private String email;
+    private final Long seq;
+    private final String email;
     private String passwd;
-    private int loginCount;
+    private final int loginCount;
     private LocalDateTime lastLoginAt;
-    private LocalDateTime createAt;
+    private final LocalDateTime createAt;
 
     public User(Long seq, String email, String passwd, int loginCount, LocalDateTime lastLoginAt, LocalDateTime createAt) {
         this.seq = seq;
