@@ -1,6 +1,8 @@
 package woodiny.socialserver.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import woodiny.socialserver.dto.UserRegisterRequest;
 import woodiny.socialserver.dto.UserRegisterResponse;
@@ -8,6 +10,7 @@ import woodiny.socialserver.model.user.User;
 import woodiny.socialserver.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -24,8 +27,14 @@ public class UserController {
     }
 
     @GetMapping("/api/users/{userId}")
-    public User getUser(@PathVariable("userId") Long userId) {
-        return userService.getUser(userId);
+    public ResponseEntity<User> getUser(@PathVariable("userId") Long userId) {
+        Optional<User> user = userService.findByUserId(userId);
+
+        if (user.isPresent()) {
+            return ResponseEntity.ok(user.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @PostMapping("/api/users/join")

@@ -4,12 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import woodiny.socialserver.dto.UserRegisterRequest;
 import woodiny.socialserver.model.user.Email;
 import woodiny.socialserver.model.user.User;
 import woodiny.socialserver.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Transactional(readOnly = true)
@@ -27,8 +27,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User getUser(Long userId) {
-        return userRepository.find(userId);
+    public Optional<User> findByUserId(Long userId) {
+        return userRepository.findBySeq(userId);
     }
 
     @Transactional

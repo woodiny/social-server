@@ -2,6 +2,7 @@ package woodiny.socialserver.repository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -18,6 +19,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static woodiny.socialserver.util.ConvertUtil.*;
 
@@ -38,12 +40,18 @@ public class UserRepository {
         );
     }
 
-    public User find(Long seq) {
-        return jdbcTemplate.queryForObject(
-                "select * from users where seq = ?",
-                new UserRowMapper(),
-                seq
-        );
+    public Optional<User> findBySeq(Long seq) {
+        try {
+            User user = jdbcTemplate.queryForObject(
+                    "select * from users where seq = ?",
+                    new UserRowMapper(),
+                    seq
+            );
+            return Optional.ofNullable(user);
+        } catch (EmptyResultDataAccessException e) {
+            log.warn("User not found. seq: {}", seq);
+            return Optional.empty();
+        }
     }
 
     public long save(User user) {
