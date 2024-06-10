@@ -30,7 +30,7 @@ public class UserController {
 
     @PostMapping("/api/users/join")
     public UserRegisterResponse register(@RequestBody UserRegisterRequest request) {
-        userService.register(request);
+        userService.register(request.getPrincipal(), request.getCredentials());
         return new UserRegisterResponse(true, "가입완료");
     }
 }

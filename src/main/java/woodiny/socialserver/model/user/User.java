@@ -2,6 +2,7 @@ package woodiny.socialserver.model.user;
 
 import lombok.Getter;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Getter
@@ -23,6 +24,10 @@ public class User {
         this.passwd = passwd;
         this.loginCount = loginCount;
         this.lastLoginAt = lastLoginAt;
-        this.createAt = createAt;
+        this.createAt = ensureCreateAt(createAt);
+    }
+
+    private LocalDateTime ensureCreateAt(LocalDateTime localDateTime) {
+        return localDateTime == null ? LocalDateTime.now() : null;
     }
 }

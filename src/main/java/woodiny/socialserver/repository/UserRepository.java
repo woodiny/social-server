@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import woodiny.socialserver.dto.UserRegisterRequest;
 import woodiny.socialserver.model.user.Email;
 import woodiny.socialserver.model.user.User;
+import woodiny.socialserver.util.ConvertUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +18,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static woodiny.socialserver.util.ConvertUtil.*;
 
 @Slf4j
 @Repository
@@ -54,8 +57,8 @@ public class UserRepository {
             ps.setString(1, user.getEmail().getAddress());
             ps.setString(2, user.getPasswd());
             ps.setInt(3, user.getLoginCount());
-            ps.setTimestamp(4, Timestamp.valueOf(user.getLastLoginAt()));
-            ps.setTimestamp(5, Timestamp.valueOf(user.getCreateAt()));
+            ps.setTimestamp(4, timestampOf(user.getLastLoginAt()));
+            ps.setTimestamp(5, timestampOf(user.getCreateAt()));
             return ps;
         }, keyHolder);
 
