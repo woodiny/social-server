@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woodiny.socialserver.dto.UserRegisterRequest;
+import woodiny.socialserver.model.user.Email;
 import woodiny.socialserver.model.user.User;
 import woodiny.socialserver.repository.UserRepository;
 
@@ -27,8 +28,8 @@ public class UserService {
     }
 
     @Transactional
-    public long register(UserRegisterRequest request) {
-        User user = new User(request.getPrincipal(), request.getCredentials());
+    public long register(Email email, String passwd) {
+        User user = new User(email, passwd);
         return userRepository.save(user);
     }
 }
