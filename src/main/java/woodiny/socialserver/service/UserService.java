@@ -11,6 +11,7 @@ import woodiny.socialserver.repository.UserRepository;
 import java.util.List;
 
 @Slf4j
+@Transactional(readOnly = true)
 @Service
 public class UserService {
     private final UserRepository userRepository;
