@@ -1,6 +1,7 @@
 package woodiny.socialserver.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woodiny.socialserver.dto.UserRegisterRequest;
@@ -14,9 +15,11 @@ import java.util.List;
 @Transactional(readOnly = true)
 @Service
 public class UserService {
+    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
+        this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
     }
 
@@ -30,7 +33,7 @@ public class UserService {
 
     @Transactional
     public long register(Email email, String passwd) {
-        User user = new User(email, passwd);
+        User user = new User(email, passwordEncoder.encode(passwd));
         return userRepository.save(user);
     }
 }
