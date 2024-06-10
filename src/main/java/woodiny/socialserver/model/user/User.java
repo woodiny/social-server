@@ -7,13 +7,13 @@ import java.time.LocalDateTime;
 @Getter
 public class User {
     private final Long seq;
-    private final String email;
+    private final Email email;
     private String passwd;
     private int loginCount;
     private LocalDateTime lastLoginAt;
     private final LocalDateTime createAt;
 
-    public User(Long seq, String email, String passwd, int loginCount, LocalDateTime lastLoginAt, LocalDateTime createAt) {
+    public User(Long seq, Email email, String passwd, int loginCount, LocalDateTime lastLoginAt, LocalDateTime createAt) {
         this.seq = seq;
         this.email = email;
         this.passwd = passwd;

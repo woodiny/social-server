@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import woodiny.socialserver.dto.UserRegisterRequest;
+import woodiny.socialserver.model.user.Email;
 import woodiny.socialserver.model.user.User;
 
 import java.sql.ResultSet;
@@ -52,7 +53,7 @@ public class UserRepository {
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new User(
                     rs.getLong("seq"),
-                    rs.getString("email"),
+                    new Email(rs.getString("email")),
                     rs.getString("passwd"),
                     rs.getInt("login_count"),
                     rs.getObject("last_login_at", LocalDateTime.class),
