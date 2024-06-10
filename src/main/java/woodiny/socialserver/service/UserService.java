@@ -2,6 +2,7 @@ package woodiny.socialserver.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import woodiny.socialserver.dto.UserRegisterRequest;
 import woodiny.socialserver.model.user.User;
 import woodiny.socialserver.repository.UserRepository;
@@ -25,7 +26,9 @@ public class UserService {
         return userRepository.find(userId);
     }
 
-    public void register(UserRegisterRequest request) {
-        userRepository.save(request);
+    @Transactional
+    public long register(UserRegisterRequest request) {
+        User user = new User(request.getPrincipal(), request.getCredentials());
+        return userRepository.save(user);
     }
 }

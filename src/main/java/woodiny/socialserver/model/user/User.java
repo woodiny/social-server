@@ -13,6 +13,10 @@ public class User {
     private LocalDateTime lastLoginAt;
     private final LocalDateTime createAt;
 
+    public User(Email email, String passwd) {
+        this(null, email, passwd, 0, null, null);
+    }
+
     public User(Long seq, Email email, String passwd, int loginCount, LocalDateTime lastLoginAt, LocalDateTime createAt) {
         this.seq = seq;
         this.email = email;

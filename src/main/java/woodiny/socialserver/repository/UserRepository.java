@@ -4,13 +4,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import woodiny.socialserver.dto.UserRegisterRequest;
 import woodiny.socialserver.model.user.Email;
 import woodiny.socialserver.model.user.User;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -39,13 +43,23 @@ public class UserRepository {
         );
     }
 
-    public int save(UserRegisterRequest request) {
-        return jdbcTemplate.update(
-                "insert into users (email, passwd)" +
-                        " values (?, ?)",
-                request.getPrincipal(),
-                request.getCredentials()
-        );
+    public long save(User user) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update(con -> {
+            PreparedStatement ps = con.prepareStatement("INSERT INTO users" +
+                    " (email, passwd, login_count, last_login_at, create_at) " +
+                    " VALUES (?,?,?,?,?)",
+                    new String[]{"seq"});
+            ps.setString(1, user.getEmail().getAddress());
+            ps.setString(2, user.getPasswd());
+            ps.setInt(3, user.getLoginCount());
+            ps.setTimestamp(4, Timestamp.valueOf(user.getLastLoginAt()));
+            ps.setTimestamp(5, Timestamp.valueOf(user.getCreateAt()));
+            return ps;
+        }, keyHolder);
+
+        return keyHolder.getKey().longValue();
     }
 
     private static class UserRowMapper implements RowMapper<User> {
