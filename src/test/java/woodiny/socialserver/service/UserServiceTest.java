@@ -7,7 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import woodiny.socialserver.model.user.Email;
+import woodiny.socialserver.model.user.User;
 
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
@@ -23,7 +27,10 @@ class UserServiceTest {
         String passwd = "1234";
 
         long userId = userService.register(email, passwd);
+        Optional<User> findUser = userService.findByUserId(userId);
 
-        Assertions.assertThat(userId).isGreaterThan(0);
+        assertTrue(findUser.isPresent());
+        assertThat(userId).isGreaterThan(0);
+        assertThat(userId).isEqualTo(findUser.get().getSeq());
     }
 }
