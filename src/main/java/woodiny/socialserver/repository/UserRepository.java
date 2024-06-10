@@ -62,7 +62,8 @@ public class UserRepository {
             return ps;
         }, keyHolder);
 
-        return keyHolder.getKey().longValue();
+        Number key = keyHolder.getKey();
+        return key == null ? -1 : key.longValue();
     }
 
     private static class UserRowMapper implements RowMapper<User> {
