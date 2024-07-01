@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import woodiny.socialserver.model.user.Email;
 import woodiny.socialserver.model.user.User;
-import woodiny.socialserver.repository.UserRepository;
+import woodiny.socialserver.repository.user.UserRepository;
 
 import java.util.List;
 import java.util.Optional;

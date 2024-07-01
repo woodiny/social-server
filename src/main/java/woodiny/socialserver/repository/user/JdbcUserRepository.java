@@ -1,4 +1,4 @@
-package woodiny.socialserver.repository;
+package woodiny.socialserver.repository.user;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,15 +8,12 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import woodiny.socialserver.dto.UserRegisterRequest;
 import woodiny.socialserver.model.user.Email;
 import woodiny.socialserver.model.user.User;
-import woodiny.socialserver.util.ConvertUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -25,14 +22,15 @@ import static woodiny.socialserver.util.ConvertUtil.*;
 
 @Slf4j
 @Repository
-public class UserRepository {
+public class JdbcUserRepository implements UserRepository {
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public UserRepository(JdbcTemplate jdbcTemplate) {
+    public JdbcUserRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    @Override
     public List<User> findAll() {
         return jdbcTemplate.query(
                 "select * from users",
@@ -40,6 +38,7 @@ public class UserRepository {
         );
     }
 
+    @Override
     public Optional<User> findBySeq(Long seq) {
         try {
             User user = jdbcTemplate.queryForObject(
@@ -54,6 +53,7 @@ public class UserRepository {
         }
     }
 
+    @Override
     public long save(User user) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
