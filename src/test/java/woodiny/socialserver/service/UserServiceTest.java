@@ -33,4 +33,28 @@ class UserServiceTest {
         assertThat(userId).isGreaterThan(0);
         assertThat(userId).isEqualTo(findUser.get().getSeq());
     }
+
+    @Test
+    public void findByUserId() {
+        Email email = new Email("tester1@gmail.com");
+        String passwd = "1234";
+
+        long userId = userService.register(email, passwd);
+        Optional<User> findUser = userService.findByUserId(userId);
+
+        assertTrue(findUser.isPresent());
+        assertThat(userId).isEqualTo(findUser.get().getSeq());
+    }
+
+    @Test
+    public void findByUserEmail() {
+        Email email = new Email("tester1@gmail.com");
+        String passwd = "1234";
+
+        long userId = userService.register(email, passwd);
+        Optional<User> findUser = userService.findByUserEmail(email);
+
+        assertTrue(findUser.isPresent());
+        assertThat(userId).isEqualTo(findUser.get().getSeq());
+    }
 }
