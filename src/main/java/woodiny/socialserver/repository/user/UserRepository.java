@@ -11,4 +11,5 @@ public interface UserRepository {
     public Optional<User> findBySeq(Long seq);
     public Optional<User> findByEmail(Email email);
     public long save(User user);
+    public void update(User user);
 }

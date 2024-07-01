@@ -40,4 +40,9 @@ public class UserService {
         User user = new User(email, passwordEncoder.encode(passwd));
         return userRepository.save(user);
     }
+
+    @Transactional
+    public void update(User user) {
+        userRepository.update(user);
+    }
 }

@@ -89,6 +89,21 @@ public class JdbcUserRepository implements UserRepository {
         return key == null ? -1 : key.longValue();
     }
 
+    @Override
+    public void update(User user) {
+        jdbcTemplate.update(con -> {
+            PreparedStatement ps = con.prepareStatement("UPDATE users " +
+                            " SET email = ?, passwd = ?, login_count = ?, last_login_at = ? " +
+                            " where seq = ?");
+            ps.setString(1, user.getEmail().getAddress());
+            ps.setString(2, user.getPasswd());
+            ps.setInt(3, user.getLoginCount());
+            ps.setTimestamp(4, timestampOf(user.getLastLoginAt()));
+            ps.setLong(5, user.getSeq());
+            return ps;
+        });
+    }
+
     private static class UserRowMapper implements RowMapper<User> {
         @Override
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
