@@ -54,6 +54,21 @@ public class JdbcUserRepository implements UserRepository {
     }
 
     @Override
+    public Optional<User> findByEmail(Email email) {
+        try {
+            User user = jdbcTemplate.queryForObject(
+                    "select * from users where email = ?",
+                    new UserRowMapper(),
+                    email.getAddress()
+            );
+            return Optional.ofNullable(user);
+        } catch (EmptyResultDataAccessException e) {
+            log.warn("User not found. email: {}", email.getAddress());
+            return Optional.empty();
+        }
+    }
+
+    @Override
     public long save(User user) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 

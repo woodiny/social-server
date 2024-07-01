@@ -31,6 +31,10 @@ public class UserService {
         return userRepository.findBySeq(userId);
     }
 
+    public Optional<User> findByUserEmail(Email email) {
+        return userRepository.findByEmail(email);
+    }
+
     @Transactional
     public long register(Email email, String passwd) {
         User user = new User(email, passwordEncoder.encode(passwd));
