@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository {
-    public List<User> findAll();
-    public Optional<User> findBySeq(Long seq);
-    public Optional<User> findByEmail(Email email);
-    public long save(User user);
-    public void update(User user);
+    List<User> findAll();
+    Optional<User> findBySeq(Long seq);
+    Optional<User> findByEmail(Email email);
+    long save(User user);
+    void update(User user);
 }
