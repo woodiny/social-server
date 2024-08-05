@@ -1,5 +1,6 @@
 package woodiny.socialserver.repository.user;
 
+import woodiny.socialserver.model.user.ConnectedUser;
 import woodiny.socialserver.model.user.Email;
 import woodiny.socialserver.model.user.User;
 
@@ -12,4 +13,6 @@ public interface UserRepository {
     Optional<User> findByEmail(Email email);
     long save(User user);
     void update(User user);
+    List<ConnectedUser> findAllConnectedUser(long seq);
+    List<Long> findSeqFromAllConnectedUser(long seq);
 }

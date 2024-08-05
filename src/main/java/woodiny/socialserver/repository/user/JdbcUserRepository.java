@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import woodiny.socialserver.model.user.ConnectedUser;
 import woodiny.socialserver.model.user.Email;
 import woodiny.socialserver.model.user.User;
 
@@ -104,6 +105,25 @@ public class JdbcUserRepository implements UserRepository {
         });
     }
 
+    @Override
+    public List<ConnectedUser> findAllConnectedUser(long seq) {
+        return jdbcTemplate.query(
+                "select u.seq, u.email, c.granted from connections c join users u on c.target_seq = u.seq" +
+                        " where c.user_seq = ? and c.granted_at is not null" +
+                        " order by seq desc",
+                new ConnectedUserRowMapper()
+        );
+    }
+
+    @Override
+    public List<Long> findSeqFromAllConnectedUser(long seq) {
+        return jdbcTemplate.query(
+                "select target_seq from connections where user_seq = ? and granted_at is not null" +
+                        " order by target_seq",
+                (rs, rowNum) -> rs.getLong(1)
+        );
+    }
+
     private static class UserRowMapper implements RowMapper<User> {
         @Override
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -114,6 +134,17 @@ public class JdbcUserRepository implements UserRepository {
                     rs.getInt("login_count"),
                     rs.getObject("last_login_at", LocalDateTime.class),
                     rs.getObject("create_at", LocalDateTime.class)
+            );
+        }
+    }
+
+    private static class ConnectedUserRowMapper implements RowMapper<ConnectedUser> {
+        @Override
+        public ConnectedUser mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return new ConnectedUser(
+                    rs.getLong("seq"),
+                    new Email(rs.getString("email")),
+                    localDateTimeOf(rs.getTimestamp("granted_at"))
             );
         }
     }

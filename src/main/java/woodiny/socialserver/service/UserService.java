@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import woodiny.socialserver.model.user.ConnectedUser;
 import woodiny.socialserver.model.user.Email;
 import woodiny.socialserver.model.user.User;
 import woodiny.socialserver.repository.user.UserRepository;
@@ -33,6 +34,14 @@ public class UserService {
 
     public Optional<User> findByUserEmail(Email email) {
         return userRepository.findByEmail(email);
+    }
+
+    public List<ConnectedUser> findAllConnectedUser(Long userId) {
+        return userRepository.findAllConnectedUser(userId);
+    }
+
+    public List<Long> findConnectedIds(Long userId) {
+        return userRepository.findSeqFromAllConnectedUser(userId);
     }
 
     @Transactional
