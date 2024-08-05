@@ -12,6 +12,20 @@ create table users (
     constraint unq_user_email unique (email)
 );
 
+-- posts
+drop table if exists posts;
+
+create table posts (
+    seq bigint not null auto_increment,
+    user_seq bigint not null,
+    contents varchar(500) not null,
+    like_count int not null default 0,
+    comment_count int not null default 0,
+    create_at datetime not null default current_timestamp(),
+    primary key (seq),
+    constraint fk_post_to_user foreign key (user_seq) references users (seq) on delete restrict on update restrict
+);
+
 -- connections
 drop table if exists connections;
 

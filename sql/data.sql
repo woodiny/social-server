@@ -9,4 +9,9 @@ INSERT INTO users (email, passwd, login_count, last_login_at) VALUES ('hank.moor
 INSERT INTO users (email, passwd, login_count, last_login_at) VALUES ('ivy.taylor@example.com', 'IvyPwd798', 6, '2023-01-09 18:00:00');
 INSERT INTO users (email, passwd, login_count, last_login_at) VALUES ('jack.anderson@example.com', 'JackPassword231', 9, '2023-01-10 19:00:00');
 
+INSERT INTO posts (user_seq, contents ,like_count, comment_count, create_at) VALUES (1, 'test01 first post', 1, 1, '2023-01-09 13:10:00');
+INSERT INTO posts (user_seq, contents, like_count, comment_count, create_at) VALUES (1, 'test01 second post', 0, 0, '2023-01-09 09:45:00');
+INSERT INTO posts (user_seq, contents, like_count, comment_count, create_at) VALUES (1, 'test01 third post', 0, 0, '2023-01-09 19:05:00');
+INSERT INTO posts (user_seq, contents, like_count, comment_count, create_at) VALUES (2, 'test02 post', 0, 0, '2023-01-09 15:13:20');
+
 INSERT INTO connections(user_seq, target_seq, granted_at, create_at) VALUES (1, 2, '2023-01-10 18:00:00', '2023-01-09 18:00:00');
