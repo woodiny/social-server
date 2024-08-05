@@ -11,4 +11,8 @@ public class ConvertUtil {
     public static Timestamp timestampOf(LocalDateTime localDateTime) {
         return localDateTime == null ? null : Timestamp.valueOf(localDateTime);
     }
+
+    public static LocalDateTime localDateTimeOf(Timestamp timestamp) {
+        return timestamp == null ? null : timestamp.toLocalDateTime();
+    }
 }
