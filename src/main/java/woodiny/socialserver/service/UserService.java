@@ -46,6 +46,11 @@ public class UserService {
 
     @Transactional
     public long register(Email email, String passwd) {
+        Optional<User> findUser = userRepository.findByEmail(email);
+        if (findUser.isPresent()) {
+            throw new RuntimeException("Already used email.");
+        }
+
         User user = new User(email, passwordEncoder.encode(passwd));
         return userRepository.save(user);
     }

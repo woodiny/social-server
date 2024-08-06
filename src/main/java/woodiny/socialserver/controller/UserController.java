@@ -1,11 +1,13 @@
 package woodiny.socialserver.controller;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import woodiny.socialserver.dto.UserRegisterRequest;
 import woodiny.socialserver.dto.UserRegisterResponse;
+import woodiny.socialserver.model.user.Email;
 import woodiny.socialserver.model.user.User;
 import woodiny.socialserver.service.UserService;
 
@@ -37,9 +39,12 @@ public class UserController {
         }
     }
 
-    @PostMapping("/api/users/join")
-    public UserRegisterResponse register(@RequestBody UserRegisterRequest request) {
-        userService.register(request.getPrincipal(), request.getCredentials());
+    @PostMapping("/api/user/join")
+    public UserRegisterResponse register(@Valid @RequestBody UserRegisterRequest request) {
+        userService.register(
+                new Email(request.getPrincipal()),
+                request.getCredentials()
+        );
         return new UserRegisterResponse(true, "가입완료");
     }
 }
