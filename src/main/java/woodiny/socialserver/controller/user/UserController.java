@@ -1,12 +1,10 @@
-package woodiny.socialserver.controller;
+package woodiny.socialserver.controller.user;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import woodiny.socialserver.dto.UserRegisterRequest;
-import woodiny.socialserver.dto.UserRegisterResponse;
 import woodiny.socialserver.model.user.Email;
 import woodiny.socialserver.model.user.User;
 import woodiny.socialserver.service.UserService;

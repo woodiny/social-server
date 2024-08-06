@@ -1,4 +1,4 @@
-package woodiny.socialserver.dto;
+package woodiny.socialserver.controller.user;
 
 import lombok.Getter;
 
