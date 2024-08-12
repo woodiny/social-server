@@ -1,14 +1,13 @@
 package woodiny.socialserver.controller.user;
 
 import lombok.Getter;
+import woodiny.socialserver.model.user.User;
 
 @Getter
 public class UserRegisterResponse {
-    private final boolean success;
-    private final String response;
+    private final long userId;
 
-    public UserRegisterResponse(boolean success, String response) {
-        this.success = success;
-        this.response = response;
+    public UserRegisterResponse(long userId) {
+        this.userId = userId;
     }
 }
