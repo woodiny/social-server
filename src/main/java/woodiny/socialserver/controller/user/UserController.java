@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import woodiny.socialserver.controller.ApiResponse;
 import woodiny.socialserver.model.user.Email;
 import woodiny.socialserver.model.user.User;
 import woodiny.socialserver.service.UserService;
@@ -22,11 +23,15 @@ public class UserController {
     }
 
     @PostMapping("/api/user/join")
-    public UserRegisterResponse register(@Valid @RequestBody UserRegisterRequest request) {
-        userService.register(
+    public ApiResponse<UserRegisterResponse> register(@Valid @RequestBody UserRegisterRequest request) {
+        long userId = userService.register(
                 new Email(request.getPrincipal()),
                 request.getCredentials()
         );
-        return new UserRegisterResponse(true, "가입완료");
+
+        return ApiResponse.OK(
+                new UserRegisterResponse(userId),
+                "user successfully registered."
+        );
     }
 }
