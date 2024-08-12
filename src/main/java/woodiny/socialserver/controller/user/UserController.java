@@ -21,22 +21,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/api/users")
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
-    }
-
-    @GetMapping("/api/users/{userId}")
-    public ResponseEntity<User> getUser(@PathVariable("userId") Long userId) {
-        Optional<User> user = userService.findByUserId(userId);
-
-        if (user.isPresent()) {
-            return ResponseEntity.ok(user.get());
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
-
     @PostMapping("/api/user/join")
     public UserRegisterResponse register(@Valid @RequestBody UserRegisterRequest request) {
         userService.register(
