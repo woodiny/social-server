@@ -3,3 +3,6 @@ spring:
     name: social-server
   profiles:
     active: local
+jwt:
+  secret: test-secret-key
+  expiration: 3600000 # 1시간
