@@ -19,6 +19,12 @@ public class Claims {
 
     private Claims() {}
 
+    public Claims(Long userId, Email email, String[] roles) {
+        this.userId = userId;
+        this.email = email;
+        this.roles = roles;
+    }
+
     public Claims(DecodedJWT decodedJWT) {
         Claim userId = decodedJWT.getClaim("userId");
         if (!userId.isNull()) {
